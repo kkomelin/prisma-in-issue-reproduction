@@ -1,7 +1,7 @@
 Playground for reproducing a Prisma/MariaDB issue 
 =
 
-Prisma bug report: https://github.com/prisma/prisma/issues/14539
+Prisma bug report: https://github.com/prisma/prisma/issues/14539  
 MariaDB issue: https://jira.mariadb.org/browse/MDEV-27937
 
 **The MariaDB bug which caused the issue has been fixed in newer versions of MariaDB.**
