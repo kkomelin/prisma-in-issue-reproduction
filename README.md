@@ -1,9 +1,9 @@
-Playground to reproduce a Prisma/MariaDB issue 
+Playground for reproducing a Prisma/MariaDB issue 
 =
 
 The issue was caused by a MariaDB bug which has been fixed already in newer versions of MariaDB 
 
-Prisma bug report: https://github.com/prisma/prisma/pull/15124
+Prisma bug report: https://github.com/prisma/prisma/pull/15124  
 MariaDB issue: https://jira.mariadb.org/browse/MDEV-27937
 
 ## How to use the project
