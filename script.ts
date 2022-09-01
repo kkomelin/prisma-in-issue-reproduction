@@ -5,18 +5,13 @@ const prisma = new PrismaClient()
 async function createTags(length: number): Promise<number[]> {
   const ids = Array.from({ length }, (_, i) => i + 1)
 
-  const prismaPromises: any = [
-    // Need to clear the database first to clear it from previous runs.
-    prisma.tag.deleteMany({where: {}})
-  ]
+  const prismaPromises: any = []
 
   for (const id of ids) {
     prismaPromises.push(
       prisma.tag.create({
         data: {
           id,
-          name: 'name-' + id,
-          path: 'path-' + id,
         },
       }),
     )
@@ -26,33 +21,23 @@ async function createTags(length: number): Promise<number[]> {
   return ids
 }
 
+async function cleanDb() {
+  // clean the database before each test
+  const cleanPrismaPromises = [prisma.tag.deleteMany()]
+  await prisma.$transaction(cleanPrismaPromises)
+}
+
 async function main() {
-  await createTags(5000)
-  const randomIds = Array.from({ length: 5000 }, () => Math.floor(Math.random() * 5000))
-  const distinctRandomIds = [...new Set(randomIds)]
- 
-  console.log('randomIds length', randomIds.length) // 5000
-  console.log('uniqueRandomIds length', distinctRandomIds.length) // ~3000
+  await cleanDb()
+  const ids = await createTags(1000)
 
-  const tagsFromRandomIds = await prisma.tag.findMany({
+  const tags = await prisma.tag.findMany({
     where: {
-      id: { in: randomIds },
+      id: { in: ids },
     },
   })
 
-  const tagsFromDistinctRandomIds = await prisma.tag.findMany({
-    where: {
-      id: { in: distinctRandomIds },
-    },
-  })
-
-  console.log('tagsFromRandomIds\n', tagsFromRandomIds) // array with ~3000 entries
-  console.log('tagsFromDistinctRandomIds\n', tagsFromDistinctRandomIds) // array with ~3000 entries
-
-  assert.equal(distinctRandomIds.length > 2900, true)
-  assert.equal(distinctRandomIds.length, tagsFromRandomIds.length)
-  assert.equal(tagsFromRandomIds.length, tagsFromDistinctRandomIds.length)
-  assert.deepEqual(tagsFromRandomIds, tagsFromDistinctRandomIds)
+  assert.notEqual(tags.length, 0)
 }
 
 main()

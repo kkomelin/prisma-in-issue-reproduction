@@ -11,17 +11,5 @@ datasource db {
 }
 
 model Tag {
-  id                      Int             @id @default(autoincrement()) @db.UnsignedInt
-  name                    String          @unique
-  path                    String
-  type                    TagType         @default(STANDARD)
-
-  @@index([path])
-
-  @@map("tags")
-}
-
-enum TagType {
-  STANDARD
-  MARKETCAP
+  id Int @id
 }
