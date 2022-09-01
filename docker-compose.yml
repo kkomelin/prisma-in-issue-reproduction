@@ -3,7 +3,7 @@ version: "3"
 services:  
   prisma-in-issue-db:
     container_name: prisma-in-issue-db
-    image: mariadb:10.7
+    image: mariadb:10.7.5
     restart: unless-stopped
     env_file: "./.env"
     ports:
