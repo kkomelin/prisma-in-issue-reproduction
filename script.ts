@@ -6,7 +6,7 @@ async function createTags(length: number): Promise<number[]> {
   const ids = Array.from({ length }, (_, i) => i + 1)
 
   const prismaPromises: any = [
-    // Need to clear the database to avoid
+    // Need to clear the database first to clear it from previous runs.
     prisma.tag.deleteMany({where: {}})
   ]
 
