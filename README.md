@@ -23,3 +23,5 @@ yarn install
 yarn db:push
 yarn reproduce
 ```
+
+If you don't see any assertion erros after running the commands above, the bug has been fixed for your environment (database version).
